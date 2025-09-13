@@ -283,10 +283,40 @@ combined_filtered = pd.merge(biz_filtered, daily_filtered, on="date", how="left"
 
 # Top KPI row
 
-st.title("Marketing Intelligence — Simple & Beautiful (Light)")
-st.markdown("Clean, actionable dashboard that connects marketing activity to business outcomes. Use the sidebar to filter.")
+# st.title("Marketing Intelligence")
+# st.markdown("Clean, actionable dashboard that connects marketing activity to business outcomes. Use the sidebar to filter.")
 
 
+# total_spend = safe_sum(daily_filtered["spend"])
+# total_attr = safe_sum(daily_filtered["attributed_revenue"])
+# total_impr = safe_sum(daily_filtered["impressions"])
+# total_clicks = safe_sum(daily_filtered["clicks"])
+# orders = safe_int(biz_filtered["orders"]) if not biz_filtered.empty else 0
+# total_rev = safe_sum(biz_filtered["total_revenue"]) if not biz_filtered.empty else 0.0
+# gross_profit = safe_sum(biz_filtered["gross_profit"]) if not biz_filtered.empty else 0.0
+
+# avg_ctr = (total_clicks / total_impr) if total_impr > 0 else np.nan
+# avg_cpc = (total_spend / total_clicks) if total_clicks > 0 else np.nan
+# avg_roas = (total_attr / total_spend) if total_spend > 0 else np.nan
+# spend_per_order = (total_spend / orders) if orders > 0 else np.nan
+
+# k1,k2,k3,k4,k5,k6 = st.columns(6)
+# k1.metric("Spend (₹)", f"₹{total_spend:,.0f}")
+# k2.metric("Attributed Revenue (₹)", f"₹{total_attr:,.0f}")
+# k3.metric("Orders", f"{orders:,}")
+# k4.metric("Business Revenue (₹)", f"₹{total_rev:,.0f}")
+# k5.metric("Avg ROAS", f"{avg_roas:.2f}x" if not pd.isna(avg_roas) else "—")
+# k6.metric("Avg CTR", f"{avg_ctr:.2%}" if not pd.isna(avg_ctr) else "—")
+
+# k7,k8,k9 = st.columns(3)
+# k7.metric("Avg CPC (₹)", f"₹{avg_cpc:.2f}" if not pd.isna(avg_cpc) else "—")
+# k8.metric("Spend per Order (₹)", f"₹{spend_per_order:,.0f}" if not pd.isna(spend_per_order) else "—")
+# k9.metric("Gross Profit (₹)", f"₹{gross_profit:,.0f}")
+
+# st.markdown("---")
+# --- Compute KPI values first ---
+
+########################################################################
 total_spend = safe_sum(daily_filtered["spend"])
 total_attr = safe_sum(daily_filtered["attributed_revenue"])
 total_impr = safe_sum(daily_filtered["impressions"])
@@ -300,25 +330,83 @@ avg_cpc = (total_spend / total_clicks) if total_clicks > 0 else np.nan
 avg_roas = (total_attr / total_spend) if total_spend > 0 else np.nan
 spend_per_order = (total_spend / orders) if orders > 0 else np.nan
 
-k1,k2,k3,k4,k5,k6 = st.columns(6)
-k1.metric("Spend (₹)", f"₹{total_spend:,.0f}")
-k2.metric("Attributed Revenue (₹)", f"₹{total_attr:,.0f}")
-k3.metric("Orders", f"{orders:,}")
-k4.metric("Business Revenue (₹)", f"₹{total_rev:,.0f}")
-k5.metric("Avg ROAS", f"{avg_roas:.2f}x" if not pd.isna(avg_roas) else "—")
-k6.metric("Avg CTR", f"{avg_ctr:.2%}" if not pd.isna(avg_ctr) else "—")
+# --- Card display ---
+# --- Compute KPI values first ---
+total_spend = safe_sum(daily_filtered["spend"])
+total_attr = safe_sum(daily_filtered["attributed_revenue"])
+total_impr = safe_sum(daily_filtered["impressions"])
+total_clicks = safe_sum(daily_filtered["clicks"])
+orders = safe_int(biz_filtered["orders"]) if not biz_filtered.empty else 0
+total_rev = safe_sum(biz_filtered["total_revenue"]) if not biz_filtered.empty else 0.0
+gross_profit = safe_sum(biz_filtered["gross_profit"]) if not biz_filtered.empty else 0.0
 
-k7,k8,k9 = st.columns(3)
-k7.metric("Avg CPC (₹)", f"₹{avg_cpc:.2f}" if not pd.isna(avg_cpc) else "—")
-k8.metric("Spend per Order (₹)", f"₹{spend_per_order:,.0f}" if not pd.isna(spend_per_order) else "—")
-k9.metric("Gross Profit (₹)", f"₹{gross_profit:,.0f}")
+avg_ctr = (total_clicks / total_impr) if total_impr > 0 else np.nan
+avg_cpc = (total_spend / total_clicks) if total_clicks > 0 else np.nan
+avg_roas = (total_attr / total_spend) if total_spend > 0 else np.nan
+spend_per_order = (total_spend / orders) if orders > 0 else np.nan
+
+# --- Card display ---
+# --- Compute KPI values first ---
+total_spend = safe_sum(daily_filtered["spend"])
+total_attr = safe_sum(daily_filtered["attributed_revenue"])
+total_impr = safe_sum(daily_filtered["impressions"])
+total_clicks = safe_sum(daily_filtered["clicks"])
+orders = safe_int(biz_filtered["orders"]) if not biz_filtered.empty else 0
+total_rev = safe_sum(biz_filtered["total_revenue"]) if not biz_filtered.empty else 0.0
+gross_profit = safe_sum(biz_filtered["gross_profit"]) if not biz_filtered.empty else 0.0
+
+avg_ctr = (total_clicks / total_impr) if total_impr > 0 else np.nan
+avg_cpc = (total_spend / total_clicks) if total_clicks > 0 else np.nan
+avg_roas = (total_attr / total_spend) if total_spend > 0 else np.nan
+spend_per_order = (total_spend / orders) if orders > 0 else np.nan
+
+# --- KPI cards ---
+kpi_data = [
+    {"label": "Marketing Spend (₹)", "value": f"₹{total_spend:,.0f}"},
+    {"label": "Attributed Revenue (₹)", "value": f"₹{total_attr:,.0f}"},
+    {"label": "Orders", "value": f"{orders:,}"},
+    {"label": "Business Revenue (₹)", "value": f"₹{total_rev:,.0f}"},
+    {"label": "Avg ROAS", "value": f"{avg_roas:.2f}x" if not pd.isna(avg_roas) else "—"},
+    {"label": "Avg CLick Through Rate", "value": f"{avg_ctr:.2%}" if not pd.isna(avg_ctr) else "—"},
+    {"label": "Avg Cost Per Click (₹)", "value": f"₹{avg_cpc:.2f}" if not pd.isna(avg_cpc) else "—"},
+    {"label": "Spend per Order (₹)", "value": f"₹{spend_per_order:,.0f}" if not pd.isna(spend_per_order) else "—"},
+    {"label": "Gross Profit (₹)", "value": f"₹{gross_profit:,.0f}"},
+]
+
+card_colors = ["#ffecb3", "#c8e6c9", "#bbdefb", "#ffe0b2", "#d1c4e9", "#f0f4c3", "#f8bbd0", "#b2dfdb", "#ffd54f"]
+
+st.markdown("<h2>⚡ Marketing Intelligence  </h2>", unsafe_allow_html=True)
+
+
+
+# Render cards inline
+for i in range(0, len(kpi_data), 3):
+    cols = st.columns(3)
+    for j, col in enumerate(cols):
+        if i + j < len(kpi_data):
+            kpi = kpi_data[i + j]
+            color = card_colors[(i + j) % len(card_colors)]
+            col.markdown(f"""
+                <div style='
+                    background-color:{color};
+                    padding:20px 12px;
+                    border-radius:12px;
+                    color:black;
+                    text-align:center;
+                    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+                '>
+                    <div style='font-size:14px; font-weight:600; color:#555;'>{kpi['label']}</div>
+                    <div style='font-size:20px; font-weight:bold; margin-top:4px;'>{kpi['value']}</div>
+                </div> <br/>
+            """, unsafe_allow_html=True)
+         
 
 st.markdown("---")
 
-
+##########################################################################
 # Time series: spend / attr rev & orders
 
-st.subheader("Trends — Spend, Attributed Revenue & Orders")
+st.subheader("📈 Trends — Spend, Attributed Revenue & Orders")
 fig = make_subplots(specs=[[{"secondary_y": True}]])
 fig.add_trace(go.Scatter(x=daily_filtered['date'], y=daily_filtered['spend'],
                          mode='lines+markers', name='Marketing Spend', line=dict(width=2)), secondary_y=False)
@@ -416,4 +504,58 @@ else:
     st.info("Not enough combined daily data to compute diagnostics.")
 
 st.markdown("---")
-st.caption("Design choices: light theme, pastel palette, focused KPIs and charts for quick decisions. Use sidebar filters to isolate problems/opportunities.")
+#st.caption("Design choices: light theme, pastel palette, focused KPIs and charts for quick decisions. Use sidebar filters to isolate problems/opportunities.")
+
+
+
+# -------------------------
+# Styled Summary / Insights
+# -------------------------
+# -------------------------
+# Styled Summary / Insights (dark background friendly)
+# -------------------------
+st.subheader("📊 Key Insights")
+
+if not combined_filtered.empty and total_spend > 0:
+    col1, col2, col3 = st.columns(3)
+    
+    col1.metric(
+        label="💰 Marketing Spend",
+        value=f"₹{total_spend:,.0f}",
+        delta=f"ROAS {avg_roas:.2f}x" if not pd.isna(avg_roas) else ""
+    )
+    
+    col2.metric(
+        label="📈 Attributed Revenue",
+        value=f"₹{total_attr:,.0f}",
+        delta=f"Orders: {orders:,}"
+    )
+    
+    col3.metric(
+        label="🏷 Avg CTR / CPC",
+        value=f"{avg_ctr:.2%}" if not pd.isna(avg_ctr) else "—",
+        delta=f"CPC ₹{avg_cpc:.2f}" if not pd.isna(avg_cpc) else ""
+    )
+    
+    st.markdown("---")
+    
+    # Highlight top channel & state with black text inside colorful cards
+    top_channel = channel_filtered.sort_values("ROAS", ascending=False).iloc[0]
+    top_state = state_filtered.sort_values("spend", ascending=False).iloc[0]
+    
+    with st.container():
+        st.markdown(f"""
+        <div style='display:flex; gap:20px; flex-wrap: wrap;'>
+            <div style='flex:1; background-color:#FCE4EC; padding:20px; border-radius:12px; color:black;'>
+                <h4 style='margin-bottom:10px;'>🏆 Best Channel</h4>
+                <p style='font-size:20px; margin:0;'>{top_channel['channel']} (ROAS {top_channel['ROAS']:.2f}x)</p>
+            </div>
+            <div style='flex:1; background-color:#E3F2FD; padding:20px; border-radius:12px; color:black;'>
+                <h4 style='margin-bottom:10px;'>📍 Top State by Spend</h4>
+                <p style='font-size:20px; margin:0;'>{top_state['state']} (₹{top_state['attributed_revenue']:,.0f})</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+else:
+    st.info("No summary available for the current filters. Try adjusting your selections.")
+
