@@ -461,7 +461,7 @@ if not ch.empty:
 st.markdown("---")
 
 
-st.subheader("State-level summary (top states by spend)")
+st.subheader("State-level summary ")
 if not state_filtered.empty:
     state_top = state_filtered.sort_values("spend", ascending=False).head(12)
     fig_state = px.bar(state_top, x='spend', y='state', orientation='h', title="Top states by Spend", template="plotly_white",
@@ -474,7 +474,7 @@ else:
 st.markdown("---")
 
 #making a downloadable 
-st.subheader("Top campaigns (filtered) — actionable list")
+st.subheader("Top campaigns  — actionable list")
 if not campaign_filtered.empty:
     camp = campaign_filtered.copy().sort_values("attributed_revenue", ascending=False)
     camp_display = camp[['channel','campaign','spend','attributed_revenue','CTR','CPC','ROAS']].head(50).fillna(0)
