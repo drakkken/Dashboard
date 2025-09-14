@@ -247,8 +247,25 @@ state_options = marketing["state"].dropna().unique().tolist()
 selected_states = st.sidebar.multiselect("State (optional)", state_options)
 
 # apply filters
+#################################################################
+
+if not date_range or len(date_range) < 2  :
+    st.warning("⚠️ Please select a date range to see the dashboard.")
+    st.stop()
+else:
+    start_dt = pd.to_datetime(date_range[0])
+    end_dt   = pd.to_datetime(date_range[1])
+
 start_dt = pd.to_datetime(date_range[0])
 end_dt = pd.to_datetime(date_range[1])
+############################################
+
+
+
+# Case 1: User has not selected both start and end dates
+
+
+
 mask = (marketing["date"] >= start_dt) & (marketing["date"] <= end_dt) & (marketing["channel"].isin(selected_channels))
 if selected_tactics:
     mask &= marketing["tactic"].isin(selected_tactics)
